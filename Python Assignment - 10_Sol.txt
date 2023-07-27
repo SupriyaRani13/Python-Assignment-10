@@ -1,0 +1,157 @@
+Python Assignment - 10
+
+1. How do you distinguish between shutil.copy() and shutil.copytree()?
+
+Sol: 1. shutil.copy(src, dst):
+
+     This function is used to copy a single file from the source (src) to the destination (dst).
+     The src argument is the path of the file to be copied, and the dst argument is the path of the destination directory where the file will be copied to.
+     If the dst is a directory, the file will be copied into that directory using the same filename. If dst is a file path, it will be considered as a new 
+     filename for the copied file.
+
+    Eg - import shutil
+
+      src_file = '/path/to/source/file.txt'
+      dst_directory = '/path/to/destination/directory'
+      shutil.copy(src_file, dst_directory) 
+
+    2. shutil.copytree(src, dst, symlinks=False):
+
+     This function is used to recursively copy an entire directory and all its contents from the source (src) to the destination (dst).
+     The src argument is the path of the source directory to be copied, and the dst argument is the path of the destination directory 
+     where the entire directory structure will be copied to.
+ 
+     Eg - import shutil
+
+       src_directory = '/path/to/source/directory'
+       dst_directory = '/path/to/destination/directory'
+       shutil.copytree(src_directory, dst_directory)
+
+
+ 2. What function is used to rename files?
+
+Sol: In Python, you can use the os.rename() function from the os module to rename files. This function allows you to change the name of a 
+     file by providing the old (current) file path and the new file path.
+
+    Eg - import os
+
+       old_file_path = '/path/to/old_filename.ext'
+       new_file_path = '/path/to/new_filename.ext'
+
+       os.rename(old_file_path, new_file_path)
+
+3. What is the difference between the delete functions in the send2trash and shutil modules?
+
+Sol: 1. send2trash module:
+
+    The send2trash module provides a safe way to delete files or directories by sending them to the operating system's trash/recycle bin instead 
+    of   permanently deleting them.
+    This means that the deleted items are not immediately removed from the file system but rather moved to the trash bin, allowing the user to 
+    restore them if needed.
+
+   Eg - import send2trash
+
+     file_path = '/path/to/file.txt'
+     send2trash.send2trash(file_path) 
+
+   2. shutil module:
+
+     The shutil module, as discussed earlier, is a utility module that provides various file operations, including copying, moving, and
+     deleting files/directories.
+     The shutil.rmtree() function can be used to recursively delete an entire directory and its contents.
+   
+    Eg - import shutil
+
+      directory_path = '/path/to/directory'
+      shutil.rmtree(directory_path)
+
+ 4. ZipFile objects have a close() method just like File objects’ close() method. What ZipFile method is
+   equivalent to File objects’ open() method?
+
+Sol: In Python, the equivalent method to the File objects' open() method for ZipFile objects is the zipfile.ZipFile() constructor. 
+     It is used to create a ZipFile object that represents a ZIP archive and allows you to work with compressed files.
+
+   The zipfile.ZipFile() constructor is used to open a ZIP archive or create a new one. It takes the file path as its first argument and 
+   provides various methods to interact with the compressed files and directories within the ZIP archive.
+
+   eg - import zipfile
+
+    # Opening an existing ZIP archive in read mode
+    zip_file_path = '/path/to/archive.zip'
+    zip_obj = zipfile.ZipFile(zip_file_path, 'r')
+
+                 OR
+
+    # Creating a new ZIP archive in write mode
+    new_zip_file_path = '/path/to/new_archive.zip'
+    zip_obj = zipfile.ZipFile(new_zip_file_path, 'w')
+
+   Once you have created the ZipFile object, you can use its various methods, such as extractall(), read(), write(), etc., to work with the files 
+   and directories inside the ZIP archive.
+
+  Eg - import zipfile
+
+    zip_file_path = '/path/to/archive.zip'
+    zip_obj = zipfile.ZipFile(zip_file_path, 'r')
+
+    # Extract all the files from the ZIP archive to a specified directory
+    extract_dir = '/path/to/destination/directory'
+    zip_obj.extractall(extract_dir)
+
+    zip_obj.close()
+
+
+5. Create a programme that searches a folder tree for files with a certain file extension (such as .pdf
+   or .jpg). Copy these files from whatever location they are in to a new folder.
+
+Sol: We can use the os and shutil modules in Python to create a program that searches for files with a specific file extension in a folder tree and
+     then copies these files to a new folder. 
+
+    Eg - import os
+         import shutil
+
+      def copy_files_by_extension(source_folder, destination_folder, file_extension):
+         for foldername, _, filenames in os.walk(source_folder):
+             for filename in filenames:
+                if filename.endswith(file_extension):
+                    source_file_path = os.path.join(foldername, filename)
+                    destination_file_path = os.path.join(destination_folder, filename)
+                
+                # Check if the destination folder exists; if not, create it
+                    os.makedirs(destination_folder, exist_ok=True)
+                
+                # Copy the file from the source to the destination folder
+                   shutil.copy2(source_file_path, destination_file_path)
+                   print(f"Copied {filename} to {destination_folder}")
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
